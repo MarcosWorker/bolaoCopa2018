@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "291910885957",
+    "firebase_url": "https://bolaocopa2018-8c919.firebaseio.com",
+    "project_id": "bolaocopa2018-8c919",
+    "storage_bucket": "bolaocopa2018-8c919.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291910885957:android:5caf884114455b50",
+        "android_client_info": {
+          "package_name": "com.example.marcos.bolaocopadomundo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291910885957-8fc2qumv4pjfqt95688j13igsl9uouol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.marcos.bolaocopadomundo",
+            "certificate_hash": "bbefdc9fb4e3e16d497c6fd3b6159b653a3aac81"
+          }
+        },
+        {
+          "client_id": "291910885957-0td54b1al3vo62s8mlbfri6v7qpplit9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6h39gNNkplPcDE_RqnY9IdyDId9ht_uM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291910885957-0td54b1al3vo62s8mlbfri6v7qpplit9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
