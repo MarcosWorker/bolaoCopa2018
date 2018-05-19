@@ -29,6 +29,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class MainActivity extends AppCompatActivity {
 
     private Button signOutButton;
+    private Button btTabela;
+    private Button btRanking;
+    private Button btAtualizar;
     private FirebaseUser user;
 
     @Override
@@ -50,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btTabela = findViewById(R.id.tabela);
+        btTabela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,TabelaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //ver se o usuário ta logado
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
