@@ -6,11 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".view.LoginActivity">
 
+    <ImageView
+        android:layout_width="203dp"
+        android:layout_height="214dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/logocopa2018" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Bolão dos Gigantes da Resenha" />
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="225dp"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="108dp"
+        android:text="Fazer login" />
 
 </RelativeLayout>

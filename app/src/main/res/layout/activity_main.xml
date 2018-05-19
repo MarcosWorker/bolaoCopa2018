@@ -6,11 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
-    <Button
-        android:id="@+id/sign_out_button"
+    <ImageView
         android:layout_width="wrap_content"
+        android:layout_height="264dp"
+        android:background="@drawable/logo2018main" />
+
+    <Button
+        android:id="@+id/tabela"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="SAIR"/>
+        android:background="@color/colorPrimary"
+        android:text="TABELA"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/ranking"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabela"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:text="Ranking"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/atualizar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ranking"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:text="Atualizar"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atualizar"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:text="Sair"
+        android:textColor="#fff" />
 
 </RelativeLayout>
