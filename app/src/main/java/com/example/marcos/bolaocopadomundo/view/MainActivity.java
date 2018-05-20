@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marcos.bolaocopadomundo.R;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btRanking;
     private Button btAtualizar;
     private FirebaseUser user;
+    private TextView tvBoasVIndas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
+        }
+
+        //texto do usuario
+
+        tvBoasVIndas = (TextView)findViewById(R.id.tv_boas_vindas);
+        if(user.getEmail().equals("tagsudra86@gmail.com")){
+            tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Administrador");
         }else{
-            Toast.makeText(this, "Seja bem vindo "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Participante");
         }
     }
 

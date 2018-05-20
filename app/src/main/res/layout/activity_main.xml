@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+    <TextView
+        android:id="@+id/tv_boas_vindas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"
+        android:textAlignment="center" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="264dp"

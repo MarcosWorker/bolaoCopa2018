@@ -59,7 +59,6 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals("")) {
                     jogo.setPlacarTime1(Integer.parseInt(s.toString()));
-                    notifyDataSetChanged();
                 }
             }
         });
@@ -83,7 +82,6 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals("")) {
                     jogo.setPlacarTime1(Integer.parseInt(s.toString()));
-                    notifyDataSetChanged();
                 }
             }
         });
