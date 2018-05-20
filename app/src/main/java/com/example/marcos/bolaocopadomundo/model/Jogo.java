@@ -16,7 +16,7 @@ public class Jogo {
      * se time2 vencer = 2
      * se der empate = 3
      */
-    private int resultado;
+    private String resultado;
     private String data;
     private String hora;
 
@@ -30,7 +30,7 @@ public class Jogo {
                 int imgTime2,
                 String rodada,
                 String fase,
-                int resultado,
+                String resultado,
                 String data,
                 String hora) {
         this.time1 = time1;
@@ -110,11 +110,11 @@ public class Jogo {
         this.fase = fase;
     }
 
-    public int getResultado() {
+    public String getResultado() {
         return resultado;
     }
 
-    public void setResultado(int resultado) {
+    public void setResultado(String resultado) {
         this.resultado = resultado;
     }
 

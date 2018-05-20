@@ -80,8 +80,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Toast.makeText(this, "Seja bem vindo ao bolão da copa 2018", Toast.LENGTH_SHORT).show();
         }
     }
 

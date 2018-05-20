@@ -1,8 +1,9 @@
 package com.example.marcos.bolaocopadomundo.control;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterTabela.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AdapterTabela.ViewHolder holder, int position) {
         final Jogo jogo = jogos.get(position);
 
         //logo time 1
@@ -43,15 +44,57 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         //nome time 1
         holder.tvTime1.setText(jogo.getTime1());
         //placar time 1
-        holder.edtPlacarTime1.setText(String.valueOf(jogo.getPlacarTime1()));
+        holder.edtPlacarTime1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().equals("")) {
+                    jogo.setPlacarTime1(Integer.parseInt(s.toString()));
+                    notifyDataSetChanged();
+                }
+            }
+        });
         //logo time 2
         holder.imgTime2.setImageResource(jogo.getImgTime2());
         //nome time 2
         holder.tvTime2.setText(jogo.getTime2());
         //placar time 2
-        holder.edtPlacarTime2.setText(String.valueOf(jogo.getPlacarTime2()));
+        holder.edtPlacarTime2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().equals("")) {
+                    jogo.setPlacarTime1(Integer.parseInt(s.toString()));
+                    notifyDataSetChanged();
+                }
+            }
+        });
         //placar real
-        holder.tvPlacarReal.setText(jogo.getPlacarTime1()+" x "+jogo.getPlacarTime2());
+        holder.tvPlacarReal.setText(jogo.getResultado());
+        //data
+        holder.tvData.setText(jogo.getData());
+        //hora
+        holder.tvHora.setText(jogo.getHora());
+        //rodada
+        holder.tvRodada.setText(jogo.getRodada());
 
     }
 
@@ -65,6 +108,7 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         return position;
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgTime1;
@@ -74,6 +118,9 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         private TextView tvTime2;
         private EditText edtPlacarTime2;
         private TextView tvPlacarReal;
+        private TextView tvData;
+        private TextView tvHora;
+        private TextView tvRodada;
 
 
         public ViewHolder(View v) {
@@ -86,6 +133,9 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
             tvTime2 = (TextView) v.findViewById(R.id.tv_time2);
             edtPlacarTime2 = (EditText) v.findViewById(R.id.edit_placar_time2);
             tvPlacarReal = (TextView) v.findViewById(R.id.tv_placar_real);
+            tvData = (TextView) v.findViewById(R.id.tv_data);
+            tvHora = (TextView) v.findViewById(R.id.tv_hora);
+            tvRodada = (TextView) v.findViewById(R.id.tv_rodada);
         }
 
     }
