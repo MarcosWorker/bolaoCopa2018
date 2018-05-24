@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marcos.bolaocopadomundo.R;
+import com.example.marcos.bolaocopadomundo.model.Jogo;
+import com.example.marcos.bolaocopadomundo.model.Usuario;
+import com.example.marcos.bolaocopadomundo.util.Util;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,6 +29,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btAtualizar;
     private FirebaseUser user;
     private TextView tvBoasVIndas;
+    private DatabaseReference mDatabase;
+    private Util util;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +94,33 @@ public class MainActivity extends AppCompatActivity {
         }else{
             tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Participante");
         }
+
+        //pegar referencia do objeto usuario no firebase database
+        mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(user.getUid())) {
+                    // já está cadastrado não faz nada
+                }else{
+                    // cadastra usuario
+                    usuario = new Usuario();
+                    util = new Util();
+                    usuario.setJogos(util.TabelaPrimeiraFase());
+                    usuario.setEmail(user.getEmail());
+                    usuario.setId(user.getUid());
+                    usuario.setNome(user.getDisplayName());
+
+                    mDatabase.setValue(usuario);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

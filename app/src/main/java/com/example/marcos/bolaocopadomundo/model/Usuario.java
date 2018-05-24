@@ -10,7 +10,6 @@ public class Usuario {
     private String id;
     private String email;
     private String nome;
-    private int ranking;
     private List<Jogo> jogos;
 
     public Usuario() {}
@@ -37,14 +36,6 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(int ranking) {
-        this.ranking = ranking;
     }
 
     public List<Jogo> getJogos() {

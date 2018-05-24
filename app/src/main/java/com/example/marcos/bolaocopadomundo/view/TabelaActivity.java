@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.marcos.bolaocopadomundo.R;
@@ -31,7 +32,6 @@ public class TabelaActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager = null;
     private AdapterTabela adapterTabela = null;
     private List<Jogo> jogos;
-    private Util util;
     private AlertDialog alerta;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
@@ -50,10 +50,6 @@ public class TabelaActivity extends AppCompatActivity {
             finish();
         }
 
-        util = new Util();
-
-        jogos = util.TabelaPrimeiraFase();
-
         recyclerView = (RecyclerView) findViewById(R.id.rv_tabela);
 
         montarTabela();
@@ -66,31 +62,19 @@ public class TabelaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //attaching value event listener
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //limpa lista de jogos
-                jogos.clear();
-
-                //iterating through all the nodes
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //pegando usuario
-                    Usuario usuario = postSnapshot.getValue(Usuario.class);
-                    //usuario existe no banco
-                    if(usuario.getId().equals(user.getUid())){
-                        jogos = usuario.getJogos();
-                        montarTabela();
-                    }
-
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(user.getUid())) {
+                    // já está cadastrado não faz nada
+                }else{
+                    // cadastra usuario
                 }
-
-
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(TabelaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
