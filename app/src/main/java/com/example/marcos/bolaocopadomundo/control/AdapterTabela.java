@@ -106,6 +106,10 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         return position;
     }
 
+    public List<Jogo> tabelaAtualizada(){
+        return jogos;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.marcos.bolaocopadomundo.R;
@@ -35,6 +37,8 @@ public class TabelaActivity extends AppCompatActivity {
     private AlertDialog alerta;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
+    private Usuario usuario;
+    private Button btSalvarTabela;
 
 
     @Override
@@ -50,12 +54,18 @@ public class TabelaActivity extends AppCompatActivity {
             finish();
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_tabela);
-
-        montarTabela();
-
         //pegar referencia do objeto usuario no firebase database
         mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
+
+        //botão salvar
+
+        btSalvarTabela = findViewById(R.id.bt_salvar_tabela);
+        btSalvarTabela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                salvarTabela();
+            }
+        });
 
     }
 
@@ -65,11 +75,9 @@ public class TabelaActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(user.getUid())) {
-                    // já está cadastrado não faz nada
-                }else{
-                    // cadastra usuario
-                }
+                usuario = snapshot.child(user.getUid()).getValue(Usuario.class);
+                jogos = usuario.getJogos();
+                montarTabela();
             }
 
             @Override
@@ -106,6 +114,7 @@ public class TabelaActivity extends AppCompatActivity {
     }
 
     private void montarTabela(){
+        recyclerView = (RecyclerView) findViewById(R.id.rv_tabela);
         adapterTabela = new AdapterTabela(jogos);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -115,8 +124,18 @@ public class TabelaActivity extends AppCompatActivity {
     private void salvarTabela(){
         //verificar se pode alterar
 
-        //nova tabela
+        //salvar tabela
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                usuario.setJogos(adapterTabela.tabelaAtualizada());
+                mDatabase.child(user.getUid()).setValue(usuario);
+            }
 
-        //editar tabela
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(TabelaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
