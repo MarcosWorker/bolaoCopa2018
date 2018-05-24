@@ -1,5 +1,8 @@
 package com.example.marcos.bolaocopadomundo.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Jogo {
 
     private String time1;

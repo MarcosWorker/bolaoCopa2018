@@ -1,7 +1,10 @@
 package com.example.marcos.bolaocopadomundo.model;
 
 import java.util.List;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+
+@IgnoreExtraProperties
 public class Usuario {
 
     private String id;
