@@ -37,8 +37,8 @@ public class TabelaActivity extends AppCompatActivity {
     private AlertDialog alerta;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
-    private Usuario usuario;
     private Button btSalvarTabela;
+    private Usuario usuario;
 
 
     @Override
@@ -72,14 +72,22 @@ public class TabelaActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                usuario = snapshot.child(user.getUid()).getValue(Usuario.class);
-                jogos = usuario.getJogos();
-                montarTabela();
-            }
 
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    usuario = dataSnapshot.getValue(Usuario.class);
+
+                    if(usuario.getUid().equals(user.getUid())){
+                        jogos = usuario.getJogos();
+                        montarTabela();
+                    }else {
+                        usuario = null;
+                    }
+                }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(TabelaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
@@ -128,8 +136,9 @@ public class TabelaActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                usuario.setJogos(adapterTabela.tabelaAtualizada());
-                mDatabase.child(user.getUid()).setValue(usuario);
+                mDatabase.child(usuario.getId()).setValue(usuario);
+                Toast.makeText(TabelaActivity.this, "Tabela armazenada com sucesso", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override

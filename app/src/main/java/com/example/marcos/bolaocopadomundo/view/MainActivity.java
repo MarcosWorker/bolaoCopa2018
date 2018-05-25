@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private Util util;
     private Usuario usuario;
+    private int usuarioCadastrado = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,48 +81,56 @@ public class MainActivity extends AppCompatActivity {
 
         //ver se o usuário ta logado
         user = FirebaseAuth.getInstance().getCurrentUser();
+
         if(user == null){
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
-        }
-
-        //texto do usuario
-
-        tvBoasVIndas = (TextView)findViewById(R.id.tv_boas_vindas);
-        if(user.getEmail().equals("tagsudra86@gmail.com")){
-            tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Administrador");
         }else{
-            tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Participante");
-        }
+            //texto do usuario
+            tvBoasVIndas = (TextView)findViewById(R.id.tv_boas_vindas);
+            if(user.getEmail().equals("tagsudra86@gmail.com")){
+                tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Administrador");
+            }else{
+                tvBoasVIndas.setText(user.getDisplayName()+" você está logado como Participante");
+            }
 
-        //pegar referencia do objeto usuario no firebase database
-        mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
+            //pegar referencia do objeto usuario no firebase database
+            mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        usuario = dataSnapshot.getValue(Usuario.class);
+                        if(usuario.getUid().equals(user.getUid())){
+                            usuarioCadastrado = 1;
+                        }
+                    }
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(user.getUid())) {
-                    // já está cadastrado não faz nada
-                }else{
-                    // cadastra usuario
-                    usuario = new Usuario();
-                    util = new Util();
-                    usuario.setJogos(util.TabelaPrimeiraFase());
-                    usuario.setEmail(user.getEmail());
-                    usuario.setId(user.getUid());
-                    usuario.setNome(user.getDisplayName());
+                    if(usuarioCadastrado == 0){
+                        usuario = new Usuario();
+                        //gerar primary key
+                        String id = mDatabase.push().getKey();
 
-                    mDatabase.setValue(usuario);
+                        util = new Util();
+                        usuario.setId(id);
+                        usuario.setJogos(util.TabelaPrimeiraFase());
+                        usuario.setEmail(user.getEmail());
+                        usuario.setUid(user.getUid());
+                        usuario.setNome(user.getDisplayName());
+                        usuario.setPontuacao(0);
+                        // salvar no database
+                        mDatabase.child(id).setValue(usuario);
+                    }
+
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
-
 }
 

@@ -8,11 +8,30 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Usuario {
 
     private String id;
+    private String uid;
     private String email;
     private String nome;
-    private List<Jogo> jogos;
+    private int pontuacao;
 
     public Usuario() {}
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    private List<Jogo> jogos;
 
     public String getId() {
         return id;

@@ -44,6 +44,7 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         //nome time 1
         holder.tvTime1.setText(jogo.getTime1());
         //placar time 1
+        holder.edtPlacarTime1.setText(String.valueOf(jogo.getPlacarTime1()));
         holder.edtPlacarTime1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -67,6 +68,7 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
         //nome time 2
         holder.tvTime2.setText(jogo.getTime2());
         //placar time 2
+        holder.edtPlacarTime2.setText(String.valueOf(jogo.getPlacarTime2()));
         holder.edtPlacarTime2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,7 +83,7 @@ public class AdapterTabela extends RecyclerView.Adapter<AdapterTabela.ViewHolder
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals("")) {
-                    jogo.setPlacarTime1(Integer.parseInt(s.toString()));
+                    jogo.setPlacarTime2(Integer.parseInt(s.toString()));
                 }
             }
         });
