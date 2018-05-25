@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/imgtime1_atualizar"
+        android:layout_width="86dp"
+        android:layout_height="73dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_time1_atualizar"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:textAlignment="center"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/edit_placar_time1_atualizar"
+        android:layout_width="60dp"
+        android:layout_height="66dp"
+        android:layout_alignBottom="@+id/imgtime1_atualizar"
+        android:layout_toEndOf="@+id/imgtime1_atualizar"
+        android:hint="0"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/x_placar_atualizar"
+        android:layout_width="51dp"
+        android:layout_height="49dp"
+        android:layout_alignBottom="@+id/imgtime1_atualizar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/x_placar" />
+
+    <EditText
+        android:id="@+id/edit_placar_time2_atualizar"
+        android:layout_width="60dp"
+        android:layout_height="63dp"
+        android:inputType="number"
+        android:layout_alignBottom="@+id/imgtime1_atualizar"
+        android:layout_toStartOf="@+id/imgtime2_atualizar"
+        android:hint="0"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_time2_atualizar"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tv_time1_atualizar"
+        android:textAlignment="center"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/imgtime2_atualizar"
+        android:layout_width="83dp"
+        android:layout_height="73dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/tv_placar_real_atualizar"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgtime1_atualizar"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#e61515"
+        android:textStyle="bold"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tv_data_atualizar"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_placar_real_atualizar" />
+
+    <TextView
+        android:id="@+id/tv_hora_atualizar"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_placar_real_atualizar"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_rodada_atualizar"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tv_placar_real_atualizar" />
+
+
+
+</RelativeLayout>

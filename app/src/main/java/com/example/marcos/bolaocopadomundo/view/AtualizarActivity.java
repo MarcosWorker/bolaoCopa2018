@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.marcos.bolaocopadomundo.R;
-import com.example.marcos.bolaocopadomundo.control.AdapterTabela;
+import com.example.marcos.bolaocopadomundo.control.AdapterAtualizar;
 import com.example.marcos.bolaocopadomundo.model.Jogo;
 import com.example.marcos.bolaocopadomundo.model.Usuario;
 import com.example.marcos.bolaocopadomundo.util.Util;
@@ -25,32 +24,32 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TabelaActivity extends AppCompatActivity {
+
+public class AtualizarActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView = null;
     private RecyclerView.LayoutManager mLayoutManager = null;
-    private AdapterTabela adapterTabela = null;
+    private AdapterAtualizar adapterAtualizar = null;
     private List<Jogo> jogos;
     private AlertDialog alerta;
     private DatabaseReference mDatabase;
     private FirebaseUser user;
-    private Button btSalvarTabela;
+    private Button btAtualizarTabela;
     private Usuario usuario;
-    private DatabaseReference statusDatabase;
-
+    private int master = 0;
+    private Util util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabela);
+        setContentView(R.layout.activity_atualizar);
 
         //ver se usuario esta logado
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
-            Intent intent = new Intent(TabelaActivity.this,LoginActivity.class);
+            Intent intent = new Intent(AtualizarActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
         }
@@ -58,41 +57,20 @@ public class TabelaActivity extends AppCompatActivity {
         //pegar referencia do objeto usuario no firebase database
         mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
 
-        //pegar referencia do status
-        statusDatabase = FirebaseDatabase.getInstance().getReference("status");
-
         //botão salvar
 
-        btSalvarTabela = findViewById(R.id.bt_salvar_tabela);
-        btSalvarTabela.setVisibility(View.INVISIBLE);
-        btSalvarTabela.setOnClickListener(new View.OnClickListener() {
+        btAtualizarTabela = findViewById(R.id.bt_salvar_tabela);
+        btAtualizarTabela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                salvarTabela();
+                atualizarTabela();
             }
         });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        statusDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue(String.class).equals("livre")){
-                    btSalvarTabela.setVisibility(View.VISIBLE);
-                }else{
-                    btSalvarTabela.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,17 +79,40 @@ public class TabelaActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     usuario = dataSnapshot.getValue(Usuario.class);
 
-                    if(usuario.getUid().equals(user.getUid())){
+                    if(usuario.getUid().equals("uidmaster")){
                         jogos = usuario.getJogos();
                         montarTabela();
+                        master = 1;
                     }else {
                         usuario = null;
                     }
                 }
+
+                if(master == 0){
+
+                    //gerar primary key
+                    String id = mDatabase.push().getKey();
+
+                    usuario = new Usuario();
+                    util = new Util();
+                    usuario.setJogos(util.TabelaPrimeiraFase());
+                    usuario.setNome("tabela master");
+                    usuario.setId("id");
+                    usuario.setEmail("master@gmail.com");
+                    usuario.setPontuacao(0);
+                    usuario.setUid("uidmaster");
+
+                    // salvar no database
+                    mDatabase.child(id).setValue(usuario);
+                    // preenche tabela vazia
+                    jogos = usuario.getJogos();
+                    montarTabela();
+
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(TabelaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AtualizarActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,14 +144,14 @@ public class TabelaActivity extends AppCompatActivity {
     }
 
     private void montarTabela(){
-        recyclerView = (RecyclerView) findViewById(R.id.rv_tabela);
-        adapterTabela = new AdapterTabela(jogos);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_tabela_atualizar);
+        adapterAtualizar = new AdapterAtualizar(jogos);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(adapterTabela);
+        recyclerView.setAdapter(adapterAtualizar);
     }
 
-    private void salvarTabela(){
+    private void atualizarTabela(){
         //verificar se pode alterar
 
         //salvar tabela
@@ -158,13 +159,13 @@ public class TabelaActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 mDatabase.child(usuario.getId()).setValue(usuario);
-                Toast.makeText(TabelaActivity.this, "Tabela armazenada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AtualizarActivity.this, "Tabela atualizada com sucesso", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(TabelaActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AtualizarActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
