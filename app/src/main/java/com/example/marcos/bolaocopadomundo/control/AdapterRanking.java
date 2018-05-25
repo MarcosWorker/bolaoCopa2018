@@ -26,7 +26,7 @@ public class AdapterRanking extends RecyclerView.Adapter<AdapterRanking.ViewHold
     public AdapterRanking.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.adapter_list_tabela, parent, false);
+        View v = inflater.inflate(R.layout.adapter_list_ranking, parent, false);
         AdapterRanking.ViewHolder vh = new AdapterRanking.ViewHolder(v);
         return vh;
     }

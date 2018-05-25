@@ -30,7 +30,7 @@ public class AdapterAtualizar extends RecyclerView.Adapter<AdapterAtualizar.View
     public AdapterAtualizar.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.adapter_list_tabela, parent, false);
+        View v = inflater.inflate(R.layout.adapter_list_atualizar, parent, false);
         AdapterAtualizar.ViewHolder vh = new AdapterAtualizar.ViewHolder(v);
         return vh;
     }

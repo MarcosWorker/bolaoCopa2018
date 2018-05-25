@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -48,7 +49,10 @@ public class RankingActivity extends AppCompatActivity {
 
         //pegar referencia do objeto usuario no firebase database
         mDatabase = FirebaseDatabase.getInstance().getReference("usuario");
+
+        usuarios = new ArrayList<>();
     }
+
 
     @Override
     protected void onStart() {
@@ -75,15 +79,6 @@ public class RankingActivity extends AppCompatActivity {
     private void montarRanking(){
 
         //regra de pontuação
-
-        if (usuarios.size() > 0) {
-            Collections.sort(usuarios, new Comparator<Usuario>() {
-                @Override
-                public int compare(final Usuario usuario1, final Usuario usuario2) {
-                    return String.valueOf(usuario1.getPontuacao()).compareTo(String.valueOf(usuario2.getPontuacao()));
-                }
-            });
-        }
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_tabela_ranking);
         adapterRanking = new AdapterRanking(usuarios);

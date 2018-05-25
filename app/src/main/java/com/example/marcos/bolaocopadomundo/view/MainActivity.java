@@ -79,6 +79,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btAtualizar = findViewById(R.id.atualizar);
+        btAtualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,AtualizarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btRanking = findViewById(R.id.ranking);
+        btRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,RankingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //ver se o usuário ta logado
         user = FirebaseAuth.getInstance().getCurrentUser();
 

@@ -59,7 +59,7 @@ public class AtualizarActivity extends AppCompatActivity {
 
         //botão salvar
 
-        btAtualizarTabela = findViewById(R.id.bt_salvar_tabela);
+        btAtualizarTabela = findViewById(R.id.bt_atualizar_tabela);
         btAtualizarTabela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +97,7 @@ public class AtualizarActivity extends AppCompatActivity {
                     util = new Util();
                     usuario.setJogos(util.TabelaPrimeiraFase());
                     usuario.setNome("tabela master");
-                    usuario.setId("id");
+                    usuario.setId(id);
                     usuario.setEmail("master@gmail.com");
                     usuario.setPontuacao(0);
                     usuario.setUid("uidmaster");
